@@ -11,12 +11,12 @@
                     <h3 class="mt-2">Listes Mode Paiements</h3>
                     <div class="row col-md-4 justify-content-end">
                         <a href="{{ route('payMode.create') }}" class="btn btn-sm btn-primary mt-2">Nouveau</a>
-                        <button class="btn btn-sm btn-success mt-2">Exporter Excel</button>
+                        <button class="btn btn-sm btn-success mt-2" onclick="ExportList('listMode')">Exporter Excel</button>
                     </div>
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-bordered mt-3 text-center">
+                <table class="table table-bordered mt-3 text-center"  id="listMode">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -49,4 +49,13 @@
         </div>
     </div>
 </div>
+@endsection
+@section("js_content")
+    <script>
+        const ExportList = (th) => {
+            const table = document.getElementById(th);
+            const wb = XLSX.utils.table_to_book(table, { sheet: "Agents" });
+            XLSX.writeFile(wb, 'agents.xlsx');
+        }
+    </script>
 @endsection

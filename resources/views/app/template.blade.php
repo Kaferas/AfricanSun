@@ -115,9 +115,10 @@
 
                     <div class="collapse navbar-collapse mt-3" id="navbarNav">
                         <ul class="navbar-nav flex-column">
-                            <li class="nav-divider">
+                            <li class="nav-divider ">
                                 Menu
                             </li>
+                            <hr class="text bg-white"/>
                             <li class="nav-item">
                                 <a class="nav-link @if (request()->routeIs('agents.*')) active @endif" href="{{ route('agents.index') }}"><i class="fa fa-fw fas fa-warehouse"></i>Agents</a>
                             </li>
@@ -131,7 +132,7 @@
                                 <a class="nav-link @if (request()->routeIs('payMode.*')) active @endif" href="{{ route('payMode.index') }}"><i class="far fa-money-bill-alt"></i>Moyen de Paiement</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link @if (request()->routeIs('users.*')) active @endif" href="{{ route('users.index') }}"><i class="fa fa-fw fas fa-users"></i>Users</a>
+                                <a class="nav-link @if (request()->routeIs('users.*')) active @endif" href="{{ route('users.index') }}"><i class="fa fa-fw fas fa-cog"></i>Users</a>
                             </li>
 
                         </ul>
@@ -194,6 +195,7 @@
     <script src="{{ asset("assets/vendor/bootstrap/js/bootstrap.bundle.js")}}"></script>
     <script src="{{ asset("assets/vendor/select2/js/select2.min.js")}}"></script>
     <script src="{{ asset("assets/vendor/sweetalert2/sweetalert2.all.min.js")}}"></script>
+    <script src="{{ asset("assets/vendor/sheetjs/xlsx.full.min.js")}}"></script>
     <!-- slimscroll js -->
     <script src="{{ asset("assets/vendor/slimscroll/jquery.slimscroll.js")}}"></script>
     <!-- main js -->
@@ -209,6 +211,18 @@
     <script src="{{ asset("assets/vendor/charts/c3charts/d3-5.4.0.min.js")}}"></script>
     <script src="{{ asset("assets/vendor/charts/c3charts/C3chartjs.js")}}"></script>
     <script src="{{ asset("assets/libs/js/dashboard-ecommerce.js")}}"></script>
+    <script>
+        function ExportToExcel(id,name,dl){
+            var elt = document.getElementById(id);
+            var type = 'xlsx';
+            var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+            return XLSX.writeFile(wb, name +'.xlsx');
+            // return dl ?
+            //     XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }):
+            //     XLSX.writeFile(wb, name || ('MySheetName.' + (type || 'xlsx')));
+
+        }
+    </script>
 
     @yield('js_content')
 </body>

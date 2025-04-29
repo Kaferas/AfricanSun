@@ -8,6 +8,7 @@ use App\Models\RoleUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use stdClass;
 
 class UserController extends Controller
@@ -50,9 +51,11 @@ class UserController extends Controller
     public function profile(){
         $user=User::where('id',auth()->user()->id)->first();
         $provinces = DB::select("SELECT distinct region from burundizipcodes");
+        $countClient=auth()->user()->clients()->count();
         return view('users.profile',[
             'user'=>$user,
             'provinces'=>$provinces,
+            'countClient'=>$countClient,
         ]);
     }
 
@@ -128,7 +131,7 @@ class UserController extends Controller
                     'commune' => $request->commune,
                     'colline' => $request->colline,
                     'zone' => $request->zone,
-                    'password' => $request->password,
+                    'password' => Hash::make($request->password),
                     'address' => $request->address,
                 ]);
             }else{

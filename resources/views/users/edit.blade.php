@@ -125,7 +125,7 @@
             type: 'POST',
             data: {
                 _token: "{{ csrf_token() }}",
-                agent_id: agent_id
+                agent_id: selectedAgent
             },
             success: function(data) {
                 $("#name").val(data.name)

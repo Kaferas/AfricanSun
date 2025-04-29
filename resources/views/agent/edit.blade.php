@@ -14,15 +14,15 @@
                 <form action="{{ route('agents.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="d-flex justify-content-between mt-3">
-                        <input type="text" name="name" class="form-control mb-3" placeholder="Nom et Prenom" required>
+                        <input type="text" name="name" value="{{ $agent->name }}" class="form-control mb-3" placeholder="Nom et Prenom" required>
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                        <input type="email" name="email" class="form-control mb-3" placeholder="Email" required>
+                        <input type="email" name="email" value="{{ $agent->email }}" class="form-control mb-3" placeholder="Email" required>
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                        <input type="text" name="phone" class="form-control mb-3" placeholder="Telephone" required>
+                        <input type="text" name="phone" value="{{ $agent->phone }}" class="form-control mb-3" placeholder="Telephone" required>
                         @error('phone')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -38,13 +38,13 @@
                         @error('province')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                        <select name="commune" id="commune" class="externeC form-control" hidden onchange="triggerQuartier()">
+                        <select name="commune" id="commune" class="externeC form-control"  onchange="triggerQuartier()">
                             <option value="">Commune</option>
                         </select>
                         @error('commune')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                        <select name="colline" id="colline" class="externeQ form-control" hidden onchange="disableZoneField()">
+                        <select name="colline" id="colline" class="externeQ form-control"  onchange="disableZoneField()">
                             <option value="">Colline</option>
                         </select>
                         @error('colline')
@@ -53,7 +53,7 @@
                     </div>
                     <hr class="text text-default"/>
                     <div class="d-flex justify-content-between mt-3">
-                        <input type="text" name="zone" class="zone form-control mb-3" placeholder="Zone" required hidden>
+                        <input type="text" name="zone" class="zone form-control mb-3" placeholder="Zone" required >
                         @error('zone')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -71,6 +71,47 @@
 @endsection
 @section('js_content')
 <script>
+     var selectedAgent= "{{ $agent }}";
+    window.onload = function() {
+        if (selectedAgent != 0) {
+            $("#agent_id").val(selectedAgent);
+            alert(selectedAgent);
+            fillUpFields();
+        }
+    }
+    const fillUpFields = () => {
+        let agent_id = $("#province").val()
+        if (agent_id == "") {
+            $("#name").val("")
+            $("#email").val("")
+            $("#phone").val("")
+            $("#address").val("")
+            return
+        }else{
+            $.ajax({
+            url: "{{ url('getCommuneOfProvince') }}",
+            type: 'POST',
+            data: {
+                _token: "{{ csrf_token() }}",
+                agent_id: agent_id
+            },
+            success: function(data) {
+                $("#name").val(data.name)
+                $("#email").val(data.email)
+                $("#phone").val(data.phone)
+                $("#address").val(data.address)
+                $("#province").val(data.province).trigger('change')
+                triggerCommune();
+                let commune=data.commune;
+                triggerQuartier(commune);
+                let colline=data.colline;
+                disableZoneField(colline);
+                $("#zone").val(data.zone);
+            },
+        });
+        }
+    }
+
     function triggerCommune() {
         let province = $("#province").val()
         $(".externeC").attr("hidden", false)

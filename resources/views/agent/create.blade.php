@@ -30,7 +30,7 @@
                     <hr class="text text-default"/>
                     <div class="d-flex justify-content-between mt-3">
                         <select name="province" id="province" class="form-control" onchange="triggerCommune()"
-                            <option  selected>Selectionner Province</option>
+                            <option  selected>Selectionner province</option>
                             @foreach ($provinces as $province)
                                 <option value="{{ $province->region }}">{{ $province->region }}</option>
                             @endforeach

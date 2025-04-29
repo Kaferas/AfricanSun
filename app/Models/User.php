@@ -20,6 +20,13 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'agent_id',
+        'province',
+        'commune',
+        'colline',
+        'zone',
+        'phone',
+        'address',
         'password',
     ];
 
@@ -45,4 +52,26 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_users');
+    }
+
+    public function isAdmin()
+    {
+        return  $this->checkRule('ADMIN');
+    }
+
+    public function isAgent()
+    {
+        return  $this->checkRule('AGENT');
+    }
+
+    private function checkRule(string $name): bool
+    {
+        return in_array($name, $this->roles->map->name->toArray());
+    }
+
 }

@@ -12,8 +12,8 @@ class AgentController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-    return view('agent.index');
+    {   $agents=Agent::orderBy('id','desc')->get();
+        return view('agent.index',['agents'=>$agents]);
     }
     /**
      * Show the form for creating a new resource.
@@ -31,7 +31,11 @@ class AgentController extends Controller
         return response()->json($communes);
     }
 
-
+    public function getAgent(){
+        $agent_id = $_POST['agent_id'];
+        $agent = Agent::find($agent_id);
+        return response()->json($agent);
+    }
 
     public function QuartierOfCommune()
     {
@@ -46,15 +50,16 @@ class AgentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'phone' => 'nullable|string|max:15',
-            'address' => 'nullable|string|max:255',
-            'province' => 'nullable|string|max:255',
-            'commune' => 'nullable|string|max:255',
-            'colline' => 'nullable|string|max:255',
-            'zone' => 'nullable|string|max:255',
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'province' => 'required',
+            'commune' =>'required',
+            'colline' =>'required',
+            'zone' =>'required',
+            'address' =>'required',
         ]);
+        // dd($validated);
         // Assuming you have an Agent model
         Agent::create($validated);
         return redirect()->route('agents.index')->with('success', 'Agent created successfully.');
@@ -73,7 +78,9 @@ class AgentController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $agent = Agent::findOrFail($id);
+        $provinces = DB::select("SELECT distinct region from burundizipcodes");
+        return view('agent.edit', compact('agent', 'provinces'));
     }
 
     /**

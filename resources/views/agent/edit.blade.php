@@ -1,5 +1,5 @@
 @extends('app.template')
-@section('title', 'Creer un Agent')
+@section('title', 'Editer un Agent')
 @section("content")
 
 <div class="row mt-3">
@@ -8,7 +8,7 @@
     <div class="col-xl-12 col-lg-12 col-md-1 col-sm-12 col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="mt-2">Creer un Agent</h3>
+                <h3 class="mt-2">Editer Agent</h3>
             </div>
             <div class="card-body">
                 <form action="{{ route('agents.store') }}" method="POST" enctype="multipart/form-data">

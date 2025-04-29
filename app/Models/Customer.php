@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Customer extends Model
 {
@@ -13,11 +14,13 @@ class Customer extends Model
         "created_by","updated_by"
     ];
 
-    public function user(){
-        $this->belognsTo(User::class,'created_by');
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class,'created_by');
     }
 
-    public function scopeActive(){
-        
+    public function scopeActive($query)
+    {
+        $query->where('customer_status', 0);
     }
 }

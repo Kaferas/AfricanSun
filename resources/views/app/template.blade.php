@@ -10,12 +10,14 @@
     <link href="{{ asset("assets/vendor/fonts/circular-std/style.css") }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset("assets/libs/css/style.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/fonts/fontawesome/css/fontawesome-all.css") }}">
+    <link rel="stylesheet" href="{{ asset("assets/vendor/select2/css/select2.css") }}">
+    <link rel="stylesheet" href="{{ asset("assets/vendor/sweetalert2/sweetalert.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/charts/chartist-bundle/chartist.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/charts/morris-bundle/morris.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/charts/c3charts/c3.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/fonts/flag-icon-css/flag-icon.min.css") }}">
-    <title>@yield("title")</title>
+    <title> {{ env('APP_NAME') }} | @yield('title') </title>
 </head>
 
 <body>
@@ -120,11 +122,18 @@
                                 <a class="nav-link @if (request()->routeIs('agents.*')) active @endif" href="{{ route('agents.index') }}"><i class="fa fa-fw fas fa-warehouse"></i>Agents</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link @if (request()->routeIs('service.*')) active @endif" href="{{ route('service.index') }}"><i class="fa fa-fw fas fa-box"></i>Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @if (request()->routeIs('customer.*')) active @endif" href="{{ route('customer.index') }}"><i class="fa fa-fw fas fa-users"></i>Clients</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link @if (request()->routeIs('payMode.*')) active @endif" href="{{ route('payMode.index') }}"><i class="far fa-money-bill-alt"></i>Moyen de Paiement</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link @if (request()->routeIs('users.*')) active @endif" href="{{ route('users.index') }}"><i class="fa fa-fw fas fa-users"></i>Users</a>
                             </li>
+
                         </ul>
                     </div>
                 </nav>
@@ -138,6 +147,7 @@
         <!-- ============================================================== -->
         <div class="dashboard-wrapper">
             <div class="container-fluid dashboard-content ">
+                {{-- @yield('content') --}}
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="page-header">
@@ -182,6 +192,8 @@
     <script src="{{ asset("assets/vendor/jquery/jquery-3.3.1.min.js")}}"></script>
     <!-- bootstap bundle js -->
     <script src="{{ asset("assets/vendor/bootstrap/js/bootstrap.bundle.js")}}"></script>
+    <script src="{{ asset("assets/vendor/select2/js/select2.min.js")}}"></script>
+    <script src="{{ asset("assets/vendor/sweetalert2/sweetalert2.all.min.js")}}"></script>
     <!-- slimscroll js -->
     <script src="{{ asset("assets/vendor/slimscroll/jquery.slimscroll.js")}}"></script>
     <!-- main js -->
@@ -197,7 +209,8 @@
     <script src="{{ asset("assets/vendor/charts/c3charts/d3-5.4.0.min.js")}}"></script>
     <script src="{{ asset("assets/vendor/charts/c3charts/C3chartjs.js")}}"></script>
     <script src="{{ asset("assets/libs/js/dashboard-ecommerce.js")}}"></script>
-    @yield("js_content")
+
+    @yield('js_content')
 </body>
 
 </html>

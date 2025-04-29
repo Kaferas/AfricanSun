@@ -10,6 +10,7 @@
     <link href="{{ asset("assets/vendor/fonts/circular-std/style.css") }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset("assets/libs/css/style.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/fonts/fontawesome/css/fontawesome-all.css") }}">
+    <link rel="stylesheet" href="{{ asset("assets/vendor/select2/css/select2.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/charts/chartist-bundle/chartist.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/charts/morris-bundle/morris.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css") }}">
@@ -253,6 +254,7 @@
     <script src="{{ asset("assets/vendor/jquery/jquery-3.3.1.min.js")}}"></script>
     <!-- bootstap bundle js -->
     <script src="{{ asset("assets/vendor/bootstrap/js/bootstrap.bundle.js")}}"></script>
+    <script src="{{ asset("assets/vendor/select2/js/select2.min.js")}}"></script>
     <!-- slimscroll js -->
     <script src="{{ asset("assets/vendor/slimscroll/jquery.slimscroll.js")}}"></script>
     <!-- main js -->

@@ -44,14 +44,28 @@
                         </div>
                         <div class="form-group">
                             <label for="customer_province">Province</label>
-                            <input type="text" class="form-control @error('customer_province') is-invalid @enderror" id="customer_province" name="customer_province" value="{{ old('customer_province', $customer->customer_province ?? '') }}" required>
+                            <select id="customer_province" name="customer_province"
+                                class="select2 form-control @error('customer_province') is-invalid @enderror"
+                                required>
+                                <option>Sélectionnez un membre</option>
+                                @foreach ($provinces as $value)
+                                    <option value="{{ $value->region }}"
+                                        {{ old('customer_province', $customer->customer_province ?? '') == $value->region ? 'selected' : '' }}>
+                                        {{ $value->region }}
+                                    </option>
+                                @endforeach
+                            </select>
                             @error('customer_province')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="customer_commune">Commune</label>
-                            <input type="text" class="form-control @error('customer_commune') is-invalid @enderror" id="customer_commune" name="customer_commune" value="{{ old('customer_commune', $customer->customer_commune ?? '') }}" required>
+                            <select id="customer_commune" name="customer_commune"
+                                class="select2 form-control @error('customer_commune') is-invalid @enderror"
+                                required>
+                            </select>
+                            
                             @error('customer_commune')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

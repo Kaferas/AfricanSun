@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\AgentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,6 +23,9 @@ Route::resource('customer',CustomerController::class);
 Route::post('communeOfProvince',[AppController::class, 'getCommuneOfProvince']);
 Route::post('quartierOfCommune',[AppController::class, 'getCollineOfCommune']);
 
+Route::resource('agents',AgentController::class);
+Route::post("communeOfProvince", [AgentController::class, "getCommuneOfProvince"])->name('getCommuneOfProvince');
+Route::post("quartierOfCommune", [AgentController::class, "quartierOfCommune"])->name('quartierOfCommune');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

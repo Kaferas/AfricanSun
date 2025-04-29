@@ -32,7 +32,7 @@ class CustomerController extends Controller
             $customerQuery = $customerQuery->where('customer_commune',$commune);
         }
 
-        $customers = $customerQuery->paginate(100);
+        $customers = $customerQuery->active()->paginate(100);
 
         return view('customer.index',[
             'customers' => $customers,
@@ -66,6 +66,15 @@ class CustomerController extends Controller
             'customer_commune' => 'required|string|max:255',
             'customer_zone' => 'required|string|max:255',
             'customer_colline' => 'required|string|max:255',
+        ],[
+            "customer_firstname.required" => "Le nom est requis.",
+            "customer_lastname.required" => "Le prénom est requis.",
+            "customer_cni.required" => "Le numéro de CNI est requis.",
+            "customer_phone.required" => "Le numéro de téléphone est requis.",
+            "customer_province.required" => "La province est requise.",
+            "customer_commune.required" => "La commune est requise.",
+            "customer_zone.required" => "La zone est requise.",
+            "customer_colline.required" => "La colline est requise.",
         ]);
 
         $validatedData['created_by'] = auth()->user()->id;
@@ -98,7 +107,31 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        //
+        $validatedData = $request->validate([
+            'customer_firstname' => 'required|string|max:255',
+            'customer_lastname' => 'required|string|max:255',
+            'customer_cni' => 'required|string|max:255',
+            'customer_phone' => 'required|string|max:255',
+            'customer_province' => 'required|string|max:255',
+            'customer_commune' => 'required|string|max:255',
+            'customer_zone' => 'required|string|max:255',
+            'customer_colline' => 'required|string|max:255',
+        ],[
+            "customer_firstname.required" => "Le nom est requis.",
+            "customer_lastname.required" => "Le prénom est requis.",
+            "customer_cni.required" => "Le numéro de CNI est requis.",
+            "customer_phone.required" => "Le numéro de téléphone est requis.",
+            "customer_province.required" => "La province est requise.",
+            "customer_commune.required" => "La commune est requise.",
+            "customer_zone.required" => "La zone est requise.",
+            "customer_colline.required" => "La colline est requise.",
+        ]);
+
+        $validatedData['updated_by'] = auth()->user()->id;
+
+        $customer->update($validatedData);
+
+        return redirect()->route('customer.index')->with('success', 'Client modifié avec succès.');
     }
 
     /**
@@ -106,7 +139,15 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        $status = $customer->update([
+            'customer_status' => 1,
+            'updated_by' => auth()->user()->id
+        ]);
+        if ($status) {
+            echo json_encode(['success' => true, 'message' => 'Client supprimé avec succès.']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Erreur lors de la suppression du client.']);
+        }
     }
 
     

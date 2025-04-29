@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\AgentController;
+use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,12 +22,15 @@ Route::get('/dashboard', function () {
 
 Route::resource('customer',CustomerController::class);
 
+Route::resource('orders',OrdersController::class);
+
+Route::resource('service',ServiceController::class)->except(['show','create','edit']);
+
 Route::post('communeOfProvince',[AppController::class, 'getCommuneOfProvince']);
-Route::post('quartierOfCommune',[AppController::class, 'getCollineOfCommune']);
+Route::post('quartierOfCommune',[AppController::class, 'quartierOfCommune']);
 
 Route::resource('agents',AgentController::class);
-Route::post("communeOfProvince", [AgentController::class, "getCommuneOfProvince"])->name('getCommuneOfProvince');
-Route::post("quartierOfCommune", [AgentController::class, "quartierOfCommune"])->name('quartierOfCommune');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

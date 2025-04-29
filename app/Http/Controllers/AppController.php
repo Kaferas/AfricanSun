@@ -14,7 +14,7 @@ class AppController extends Controller
         return response()->json($communes);
     }
 
-    public function getCollineOfCommune()
+    public function quartierOfCommune()
     {
         $commune = $_POST['commune'];
         $communes = DB::select("SELECT distinct city from burundizipcodes where district='" . $commune . "'");

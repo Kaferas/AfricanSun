@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset("assets/libs/css/style.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/fonts/fontawesome/css/fontawesome-all.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/select2/css/select2.css") }}">
+    <link rel="stylesheet" href="{{ asset("assets/vendor/sweetalert2/sweetalert.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/charts/chartist-bundle/chartist.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/charts/morris-bundle/morris.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css") }}">
@@ -171,6 +172,12 @@
                                 <a class="nav-link @if (request()->routeIs('agents.*')) active @endif" href="{{ route('agents.index') }}"><i class="fa fa-fw fas fa-warehouse"></i>Agents</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link @if (request()->routeIs('customer.*')) active @endif" href="{{ route('customer.index') }}"><i class="fa fa-fw fas fa-users"></i>Clients</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @if (request()->routeIs('service.*')) active @endif" href="{{ route('service.index') }}"><i class="fa fa-fw fas fa-box"></i>Services</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-10" aria-controls="submenu-10"><i class="fas fa-f fa-folder"></i>Menu Level</a>
                                 <div id="submenu-10" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
@@ -255,6 +262,7 @@
     <!-- bootstap bundle js -->
     <script src="{{ asset("assets/vendor/bootstrap/js/bootstrap.bundle.js")}}"></script>
     <script src="{{ asset("assets/vendor/select2/js/select2.min.js")}}"></script>
+    <script src="{{ asset("assets/vendor/sweetalert2/sweetalert2.all.min.js")}}"></script>
     <!-- slimscroll js -->
     <script src="{{ asset("assets/vendor/slimscroll/jquery.slimscroll.js")}}"></script>
     <!-- main js -->

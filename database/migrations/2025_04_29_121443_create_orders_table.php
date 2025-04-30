@@ -34,12 +34,12 @@ return new class extends Migration
             $table->string('ref_order_code')->nullable();
             $table->string('service_name')->nullable();
             $table->string('service_price')->nullable();
-            $table->decimal('sold_qty',10,2)->nullable();
-            $table->decimal('sold_price',10,8)->nullable();
-            $table->decimal('htva_price',10,8)->nullable();
-            $table->decimal('tva_price',10,8)->nullable();
-            $table->decimal('tc_price',10,8)->nullable();
-            $table->decimal('pf_price',10,8)->nullable();
+            $table->float('sold_qty')->nullable();
+            $table->float('sold_price')->nullable();
+            $table->float('htva_price')->nullable();
+            $table->float('tva_price')->nullable();
+            $table->float('tc_price')->nullable();
+            $table->float('pf_price')->nullable();
             $table->integer('detail_status')->nullable()->default(0);
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

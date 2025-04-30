@@ -1,20 +1,20 @@
 @extends('app.template')
 
-@section('title','Liste des Commandes')
+@section('title','Liste des Factures')
 
 @section('content')
 
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="page-header">
-                <h2 class="pageheader-title">Liste des Commandes </h2>
+                <h2 class="pageheader-title">Liste des Factures </h2>
                 
                 <div class="page-breadcrumb">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Commandes</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Liste des Commandes</li>
+                            <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Factures</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Liste des Factures</li>
                         </ol>
                     </nav>
                 </div>
@@ -27,10 +27,10 @@
             <div class="card">
                 <div class="card-header row">
                     <div class="col-md-2 mt-3">
-                        <h4 class="text-center">Liste des Commandes</h4>
+                        <h4 class="text-center">Liste des Factures</h4>
                     </div>
                     
-                    <form class="col-md-10" action="{{ route('orders.index') }}" method="get">
+                    <form class="col-md-10" action="{{ route('invoices.index') }}" method="get">
                         <div class="row">
                             <div class="col-md-3">
                                 <div id="custom-search" class="top-search-bar">
@@ -51,8 +51,7 @@
                             </div>
                             <div class="col-md-3 mt-2">
                                 <button class="btn btn-primary"><i class="fas fa-search"></i></button>
-                                <a href="{{ route('orders.index') }}" class="btn btn-light"><i class="fas fa-redo"></i></a>
-                                <a href="{{ route('orders.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                <a href="{{ route('invoices.index') }}" class="btn btn-light"><i class="fas fa-redo"></i></a>
                             </div>
                         </div>
                     </form>
@@ -75,20 +74,14 @@
                                 <tbody>
                                     @foreach($orders as $value)
                                         <tr>
-                                            <td>{{ $value->order_code }}</td>
+                                            <td>{{ $value->invoice_number }}</td>
                                             <td>{{ $value->customer->customer_firstname .' '.$value->customer->customer_lastname }}</td>
                                             <td>{{ $value->order_status }}</td>
                                             <td>{{ $value->user->name }}</td>
-                                            <td>{{ $value->created_at->format('d/m/Y') }}</td>
+                                            <td>{{ date('d/m/Y',strtotime($value->date_facturation)) }}</td>
                                             <td>
-                                                <a href="{{ route('orders.show',$value->id) }}" class="btn btn-info btn-sm">
+                                                <a href="{{ route('invoices.show',$value->id) }}" class="btn btn-info btn-sm">
                                                     <i class="fas fa-eye"></i>
-                                                </a>
-                                                <a href="{{ route('orders.edit',["order" => $value]) }}" class="btn btn-warning btn-sm">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <a data-href="{{ route('orders.destroy',$value->id) }}" onclick="handleDelete(this)" class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-trash"></i>
                                                 </a>
                                             </td>
                                         </tr>

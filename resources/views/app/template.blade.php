@@ -36,8 +36,10 @@
                 </button>
                 <div class="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto navbar-right-top">
-
-                        <li class="nav-item dropdown notification">
+                        <li class="nav-item p-4">
+                            <h4><i>Connected as : &nbsp;</i><b class="text text-primary">{{ Auth::user()->name }}</b></h4>
+                        </li>
+                        {{-- <li class="nav-item dropdown notification">
                             <a class="nav-link nav-icons" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-fw fa-bell"></i> <span class="indicator"></span></a>
                             <ul class="dropdown-menu dropdown-menu-right notification-dropdown">
                                 <li>
@@ -83,15 +85,14 @@
                                     <div class="list-footer"> <a href="#">View all notifications</a></div>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
                         <li class="nav-item dropdown nav-user">
-                            <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/avatar-1.jpg" alt="" class="user-avatar-md rounded-circle"></a>
+                            <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ asset("assets/images/profile.png") }}" alt="" class="user-avatar-md rounded-circle"></a>
                             <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                                 <div class="nav-user-info">
                                     <h5 class="mb-0 text-white nav-user-name text-center"> {{ Auth::user()->name }}</h5>
                                 </div>
-                                <a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>Account</a>
-                                <a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i>Setting</a>
+                                <a class="dropdown-item" href="{{ route("users.profile") }}"><i class="fas fa-user mr-2"></i>Account</a>
                                 <form action="{{ route("logout") }}" method="post">
                                     @csrf
                                     <button type="submit" class="dropdown-item" ><i class="fas fa-power-off mr-2"></i>Logout</button>
@@ -111,98 +112,36 @@
         <div class="nav-left-sidebar sidebar-dark">
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
+
+                    <div class="collapse navbar-collapse mt-3" id="navbarNav">
                         <ul class="navbar-nav flex-column">
                             <li class="nav-divider">
                                 Menu
-                            </li>
-                            <li class="nav-item ">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fa-fw fa-user-circle"></i>Dashboard <span class="badge badge-success">6</span></a>
-                                <div id="submenu-1" class="collapse submenu" style="">
-                                    <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-2" aria-controls="submenu-1-2">E-Commerce</a>
-                                            <div id="submenu-1-2" class="collapse submenu" style="">
-                                                <ul class="nav flex-column">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="index.html">E Commerce Dashboard</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="ecommerce-product.html">Product List</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="ecommerce-product-single.html">Product Single</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="ecommerce-product-checkout.html">Product Checkout</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="dashboard-finance.html">Finance</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="dashboard-sales.html">Sales</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-1" aria-controls="submenu-1-1">Infulencer</a>
-                                            <div id="submenu-1-1" class="collapse submenu" style="">
-                                                <ul class="nav flex-column">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="dashboard-influencer.html">Influencer</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="influencer-finder.html">Influencer Finder</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="influencer-profile.html">Influencer Profile</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link @if (request()->routeIs('agents.*')) active @endif" href="{{ route('agents.index') }}"><i class="fa fa-fw fas fa-warehouse"></i>Agents</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link @if (request()->routeIs('customer.*')) active @endif" href="{{ route('customer.index') }}"><i class="fa fa-fw fas fa-users"></i>Clients</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link @if (request()->routeIs('service.*')) active @endif" href="{{ route('service.index') }}"><i class="fa fa-fw fas fa-box"></i>Services</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-10" aria-controls="submenu-10"><i class="fas fa-f fa-folder"></i>Menu Level</a>
-                                <div id="submenu-10" class="collapse submenu" style="">
-                                    <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">Level 1</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-11" aria-controls="submenu-11">Level 2</a>
-                                            <div id="submenu-11" class="collapse submenu" style="">
-                                                <ul class="nav flex-column">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="#">Level 1</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="#">Level 2</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">Level 3</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <a class="nav-link @if (request()->routeIs('customer.*')) active @endif" href="{{ route('customer.index') }}"><i class="fa fa-fw fas fa-users"></i>Clients</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link @if (request()->routeIs('orders.*')) active @endif" href="{{ route('orders.index') }}"><i class="fa fa-fw fas fa-users"></i>Commandes</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link @if (request()->routeIs('invoices.*')) active @endif" href="{{ route('invoices.index') }}"><i class="fa fa-fw fas fa-users"></i>Factures</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link @if (request()->routeIs('payMode.*')) active @endif" href="{{ route('payMode.index') }}"><i class="far fa-money-bill-alt"></i>Moyen de Paiement</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @if (request()->routeIs('users.*')) active @endif" href="{{ route('users.index') }}"><i class="fa fa-fw fas fa-users"></i>Users</a>
+                            </li>
+
                         </ul>
                     </div>
                 </nav>
@@ -232,8 +171,8 @@
             <div class="footer">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                             Copyright © 2018 Concept. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>.
+                        <div class="d-flex justify-content-center col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                             Copyright © {{ date('Y') }} . All rights reserved. Dashboard made by  <a href="https://colorlib.com/wp/"> &nbsp; ITARA NEXUS</a>.
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                             <div class="text-md-right footer-links d-none d-sm-block">
@@ -263,6 +202,7 @@
     <script src="{{ asset("assets/vendor/bootstrap/js/bootstrap.bundle.js")}}"></script>
     <script src="{{ asset("assets/vendor/select2/js/select2.min.js")}}"></script>
     <script src="{{ asset("assets/vendor/sweetalert2/sweetalert2.all.min.js")}}"></script>
+    <script src="{{ asset("assets/vendor/sheetjs/xlsx.full.min.js") }}"></script>
     <!-- slimscroll js -->
     <script src="{{ asset("assets/vendor/slimscroll/jquery.slimscroll.js")}}"></script>
     <!-- main js -->
@@ -278,7 +218,12 @@
     <script src="{{ asset("assets/vendor/charts/c3charts/d3-5.4.0.min.js")}}"></script>
     <script src="{{ asset("assets/vendor/charts/c3charts/C3chartjs.js")}}"></script>
     <script src="{{ asset("assets/libs/js/dashboard-ecommerce.js")}}"></script>
-
+    
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
     @yield('js_content')
 </body>
 

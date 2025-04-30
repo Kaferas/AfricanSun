@@ -154,7 +154,7 @@
                         showConfirmButton: false,
                         timer: 5000
                     });
-                    window.location.reload();
+                    window.location.href = "{{ route('invoices.index') }}";
                 } else {
                     handleErrors(response);
                 }

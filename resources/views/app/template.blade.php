@@ -30,7 +30,8 @@
         <!-- ============================================================== -->
         <div class="dashboard-header">
             <nav class="navbar navbar-expand-lg bg-white fixed-top">
-                <a class="navbar-brand" href="index.html">{{ env('APP_NAME') }}</a>
+                <a class="navbar-brand" href="{{ route("customer.index") }}">{{ env('APP_NAME') }}</a>
+                <img src="{{ asset("assets/images/logo.png") }}" width="90px" height="90px" >
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -112,12 +113,16 @@
         <div class="nav-left-sidebar sidebar-dark">
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg navbar-light">
-
+                    <a class="d-xl-none d-lg-none" href="#">Menu</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
                     <div class="collapse navbar-collapse mt-3" id="navbarNav">
                         <ul class="navbar-nav flex-column">
-                            <li class="nav-divider">
+                            <li class="nav-divider ">
                                 Menu
                             </li>
+                            <hr class="text bg-white"/>
                             <li class="nav-item">
                                 <a class="nav-link @if (request()->routeIs('agents.*')) active @endif" href="{{ route('agents.index') }}"><i class="fa fa-fw fas fa-warehouse"></i>Agents</a>
                             </li>
@@ -128,18 +133,16 @@
                                 <a class="nav-link @if (request()->routeIs('customer.*')) active @endif" href="{{ route('customer.index') }}"><i class="fa fa-fw fas fa-users"></i>Clients</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link @if (request()->routeIs('orders.*')) active @endif" href="{{ route('orders.index') }}"><i class="fa fa-fw fas fa-users"></i>Commandes</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link @if (request()->routeIs('invoices.*')) active @endif" href="{{ route('invoices.index') }}"><i class="fa fa-fw fas fa-users"></i>Factures</a>
-                            </li>
-
-                            <li class="nav-item">
                                 <a class="nav-link @if (request()->routeIs('payMode.*')) active @endif" href="{{ route('payMode.index') }}"><i class="far fa-money-bill-alt"></i>Moyen de Paiement</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link @if (request()->routeIs('users.*')) active @endif" href="{{ route('users.index') }}"><i class="fa fa-fw fas fa-users"></i>Users</a>
+                                <a class="nav-link @if (request()->routeIs('orders.*')) active @endif" href="{{ route('orders.index') }}"><i class="fa fa-fw fas fa-users"></i>Commandes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @if (request()->routeIs('invoices.*')) active @endif" href="{{ route('invoices.index') }}"><i class="fa fa-fw fas fa-users"></i>Factures</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @if (request()->routeIs('users.*')) active @endif" href="{{ route('users.index') }}"><i class="fa fa-fw fas fa-cog"></i>Users</a>
                             </li>
 
                         </ul>
@@ -202,7 +205,7 @@
     <script src="{{ asset("assets/vendor/bootstrap/js/bootstrap.bundle.js")}}"></script>
     <script src="{{ asset("assets/vendor/select2/js/select2.min.js")}}"></script>
     <script src="{{ asset("assets/vendor/sweetalert2/sweetalert2.all.min.js")}}"></script>
-    <script src="{{ asset("assets/vendor/sheetjs/xlsx.full.min.js") }}"></script>
+    <script src="{{ asset("assets/vendor/sheetjs/xlsx.full.min.js")}}"></script>
     <!-- slimscroll js -->
     <script src="{{ asset("assets/vendor/slimscroll/jquery.slimscroll.js")}}"></script>
     <!-- main js -->
@@ -218,12 +221,19 @@
     <script src="{{ asset("assets/vendor/charts/c3charts/d3-5.4.0.min.js")}}"></script>
     <script src="{{ asset("assets/vendor/charts/c3charts/C3chartjs.js")}}"></script>
     <script src="{{ asset("assets/libs/js/dashboard-ecommerce.js")}}"></script>
-    
     <script>
-        $(document).ready(function() {
-            $('.select2').select2();
-        });
+        function ExportToExcel(id,name,dl){
+            var elt = document.getElementById(id);
+            var type = 'xlsx';
+            var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+            return XLSX.writeFile(wb, name +'.xlsx');
+            // return dl ?
+            //     XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }):
+            //     XLSX.writeFile(wb, name || ('MySheetName.' + (type || 'xlsx')));
+
+        }
     </script>
+
     @yield('js_content')
 </body>
 

@@ -7,7 +7,7 @@
 <div class="container mt-3">
     <aside class="page-aside">
         <div class="aside-content">
-            <div class="aside-header">
+            <div class="aside-header mt-3">
                 <a class="navbar-toggle" data-target=".aside-nav" data-toggle="collapse" type="button"><span class="icon"><i class="fas fa-caret-down"></i></span></a><span class="title">User Management</span>
             </div>
             <div class="aside-compose"><button  class="btn btn-lg btn-primary btn-block" href="#"><i class="fas fa-child"></i></span> User Profile</button></div>
@@ -103,8 +103,8 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h1 class="mb-1">9</h1>
-                                            <p>Campaign Invitations</p>
+                                            <h1 class="mb-1">{{$countClient}}</h1>
+                                            <p>Clients Enregistre</p>
                                         </div>
                                     </div>
                                 </div>
@@ -112,7 +112,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <h1 class="mb-1">35</h1>
-                                            <p>Finished Campaigns</p>
+                                            <p>Commandes</p>
                                         </div>
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                            <div class="media influencer-profile-data d-flex align-items-center p-2">
+                                            <div class="media influencer-profile-data d-flex align-items-center p-1">
                                                 <div class="mr-4">
                                                     <img src="assets/images/slack.png" alt="User Avatar" class="user-avatar-lg">
                                                 </div>

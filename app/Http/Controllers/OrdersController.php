@@ -288,9 +288,25 @@ class OrdersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Orders $orders)
+    public function destroy(Orders $order)
     {
-        //
+        $status = $order->update([
+            "order_delete_status" => 1,
+            "deleted_by" => auth()->user()->id,
+            "deleted_at" => date('Y-m-d'),
+        ]);
+
+        if ($status) {
+            echo json_encode([
+                'success' => true,
+                'messages' => "Commande supprimé avec succé"
+            ]);
+        } else {
+            echo json_encode([
+                "success" => false,
+                "messages" => ['error' => 'Erreur,veillez Réessayer svp!!']
+            ]);
+        }
     }
 
     public function validatePayment(Request $request){

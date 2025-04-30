@@ -53,6 +53,10 @@ class User extends Authenticatable
         ];
     }
 
+    public function clients()
+    {
+        return $this->hasMany(Customer::class, 'created_by');
+    }
 
     public function roles()
     {

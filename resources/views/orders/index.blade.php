@@ -77,7 +77,7 @@
                                         <tr>
                                             <td>{{ $value->order_code }}</td>
                                             <td>{{ $value->customer->customer_firstname .' '.$value->customer->customer_lastname }}</td>
-                                            <td>{{ $value->order_status }}</td>
+                                            <td>{{ $value->order_status == 0 ? 'Non Payer' : 'Supprimer' }}</td>
                                             <td>{{ $value->user->name }}</td>
                                             <td>{{ $value->created_at->format('d/m/Y') }}</td>
                                             <td>

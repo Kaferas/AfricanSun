@@ -26,7 +26,7 @@
                         <form action="{{ route("users.index") }}"  class="email-search d-flex">
                             @csrf
                             <div class="input-group input-search">
-                                <input class="form-control" value="{{ $search }}" name="search" type="text" placeholder="Search User..."><span class="input-group-btn">
+                                <input class="form-control" value="{{ $search ?? "" }}" name="search" type="text" placeholder="Search User..."><span class="input-group-btn">
                                     <button class="btn btn-success" type="submit"><i class="fas fa-search"></i></button></span>
                             </div>
                             <a class="btn btn-sm btn-danger" href="{{ route("users.index") }}"><i class="fas fa-redo"></i></a></span>
@@ -74,4 +74,3 @@
         </div>
     </div>
 @endsection
-

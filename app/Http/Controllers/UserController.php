@@ -18,7 +18,9 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        if($search = $request->input('search')){
+
+        $search = $request->input('search')??"";
+        if($search != null){
             $users=User::where('name','like','%'.$search.'%')
                 ->orWhere('email','like','%'.$search.'%')
                 ->orWhere('phone','like','%'.$search.'%')

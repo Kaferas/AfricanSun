@@ -15,7 +15,7 @@
                     @csrf
                     <div class="mb-3">
                         <label for="">Selectionner Agent</label>
-                        <select class="form-select form-control" id="agent_id" name="agent_id" required>
+                        <select class="form-select form-control" id="agent_id" name="agent_id">
                             <option value="" disabled selected>Choisir un agent</option>
                             @foreach ($agents as $agent)
                                 <option value="{{ $agent->id }}">{{ $agent->name }}</option>

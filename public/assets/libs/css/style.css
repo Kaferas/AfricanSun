@@ -6896,7 +6896,7 @@ Media Query
     .nav-left-sidebar {
         width: 100%;
         position: relative;
-        top: 0px;
+        top: 50px;
         right: 0px;
     }
 

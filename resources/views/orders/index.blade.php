@@ -25,37 +25,40 @@
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="card">
-                <div class="card-header row">
-                    <div class="col-md-2 mt-3">
-                        <h4 class="text-center">Liste des Commandes</h4>
-                    </div>
-                    
-                    <form class="col-md-10" action="{{ route('orders.index') }}" method="get">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div id="custom-search" class="top-search-bar">
-                                    <input class="form-control" type="text" placeholder="Search.." name="search" value="{{ old('search',$search) }}">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="start_date" class="col-form-label">Date Debut</label>
-                                    <input class="form-control" type="date" placeholder="Search.." name="start_date" value="{{ old('start_date',$start_date) }}">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="end_date" class="col-form-label">Date Fin</label>
-                                    <input class="form-control" type="date" placeholder="Search.." name="end_date" value="{{ old('end_date',$end_date) }}">
-                                </div>
-                            </div>
-                            <div class="col-md-3 mt-2">
-                                <button class="btn btn-primary"><i class="fas fa-search"></i></button>
-                                <a href="{{ route('orders.index') }}" class="btn btn-light"><i class="fas fa-redo"></i></a>
-                                <a href="{{ route('orders.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-                            </div>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-2 mt-3">
+                            <h4 class="text-center">Liste des Commandes</h4>
                         </div>
-                    </form>
+                        
+                        <form class="col-md-10" action="{{ route('orders.index') }}" method="get">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div id="custom-search" class="top-search-bar">
+                                        <input class="form-control" type="text" placeholder="Search.." name="search" value="{{ old('search',$search) }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="start_date" class="col-form-label">Date Debut</label>
+                                        <input class="form-control" type="date" placeholder="Search.." name="start_date" value="{{ old('start_date',$start_date) }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="end_date" class="col-form-label">Date Fin</label>
+                                        <input class="form-control" type="date" placeholder="Search.." name="end_date" value="{{ old('end_date',$end_date) }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-2">
+                                    <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                    <a href="{{ route('orders.index') }}" class="btn btn-light"><i class="fas fa-redo"></i></a>
+                                    <a href="{{ route('orders.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
                 </div>
 
                 <div class="card-content">
@@ -77,7 +80,13 @@
                                         <tr>
                                             <td>{{ $value->order_code }}</td>
                                             <td>{{ $value->customer->customer_firstname .' '.$value->customer->customer_lastname }}</td>
-                                            <td>{{ $value->order_status == 0 ? 'Non Payer' : 'Supprimer' }}</td>
+                                            <td>
+                                                @if ($value->order_status == 0)
+                                                    <span class="badge badge-primary">Non Payer</span>
+                                                @else
+                                                    <span class="badge badge-danger">Supprimer</span>
+                                                @endif
+                                            </td>
                                             <td>{{ $value->user->name }}</td>
                                             <td>{{ $value->created_at->format('d/m/Y') }}</td>
                                             <td>

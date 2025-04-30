@@ -127,7 +127,7 @@
     if (ordersDetails.length > 0) {
         var _html = "";
         ordersDetails.forEach(row => {
-            _html = `
+            _html += `
             <tr id="order_service_${row.service_id}">
                 <td>
                     ${row.service_name}

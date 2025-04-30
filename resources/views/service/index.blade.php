@@ -25,27 +25,29 @@
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="card">
-                <div class="card-header row">
-                    <div class="col-md-2 mt-3">
-                        <h4 class="text-center">Liste des Services</h4>
-                    </div>
-                    
-                    <form class="col-md-10" action="{{ route('service.index') }}" method="get">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div id="custom-search" class="top-search-bar">
-                                    <input class="form-control" type="text" placeholder="Search.." name="search" value="{{ old('search',$search) }}">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-2 mt-3">
+                            <h4 class="text-center">Liste des Services</h4>
+                        </div>
+                        
+                        <form class="col-md-10" action="{{ route('service.index') }}" method="get">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div id="custom-search" class="top-search-bar">
+                                        <input class="form-control" type="text" placeholder="Search.." name="search" value="{{ old('search',$search) }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-2 mt-2">
+                                    <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                    <a href="{{ route('service.index') }}" class="btn btn-light"><i class="fas fa-redo"></i></a>
+                                </div>
+                                <div class="col-md-2 mt-2">
+                                    <a data-href="{{ route('service.store') }}" onclick="handleOpenModal(this)" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                                 </div>
                             </div>
-                            <div class="col-md-2 mt-2">
-                                <button class="btn btn-primary"><i class="fas fa-search"></i></button>
-                                <a href="{{ route('service.index') }}" class="btn btn-light"><i class="fas fa-redo"></i></a>
-                            </div>
-                            <div class="col-md-2 mt-2">
-                                <a data-href="{{ route('service.store') }}" onclick="handleOpenModal(this)" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
 
 

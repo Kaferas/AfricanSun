@@ -1,3 +1,32 @@
+<style type="text/css" media="print">
+    /* Hide everything except the card when printing */
+    /* body * {
+        visibility: hidden;
+    } */
+    /* .card, .card * {
+        visibility: visible;
+    } */
+    .card {
+        position: absolute!important;
+        left: 0!important;
+        top: 0!important;
+        width: 100%;
+        length: 100%;
+    }
+    .no-print {
+        display: none;
+    }
+    @page {
+        size: A4;
+        margin: 10mm;
+    }
+    /* .card-body {
+        width: 210mm;
+        min-height: 297mm;
+        padding: 20mm;
+        margin: 0 auto;
+    } */
+</style>
 @extends('app.template')
 
 @section('title','Detail de la Facture')
@@ -5,75 +34,68 @@
 @section('content')
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        
         <div class="card">
-            <div class="card-header"><h2>Formulaire Facture</h2></div>
+            <div class="card-header no-print"><h2>Formulaire Facture</h2></div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-6">
-                        <h3>Facture</h3>
-                        <p class="mb-0">Numero: {{ $orders->invoice_number }}</p>
-                        <p class="mb-0">Date: {{ date('d/m/Y',strtotime($orders->date_facturation)) }}</p>
-                        <br>
+            <div class="row">
+            <div class="col-6">
+            <h3>Facture</h3>
+            <p class="mb-0">Numero: {{ $orders->invoice_number }}</p>
+            <p class="mb-0">Date: {{ date('d/m/Y',strtotime($orders->date_facturation)) }}</p>
+            <br>
 
-                        <h5>Client</h5>
-                        <p>Nom/Prenom: {{ $orders->customer->customer_firstname .' '.$orders->customer->customer_lastname }}</p>
-                        <p>Addresse:{{ $orders->customer->customer_province .'/'.$orders->customer->customer_commune.'/'.$orders->customer->customer_zone.'/'.$orders->customer->customer_colline }} </p>
-                        <p>Phone: {{ $orders->customer->customer_phone }}</p>
-                    </div>
-                    <div class="col-6 text-end">
-                        <a href="#" onclick="handleOpenModal(this)" class="btn btn-success">Valider le payaiement</a>
-                    </div>
-                </div>
+            <h5>Client</h5>
+            <p>Nom/Prenom: {{ $orders->customer->customer_firstname .' '.$orders->customer->customer_lastname }}</p>
+            <p>Addresse:{{ $orders->customer->customer_province .'/'.$orders->customer->customer_commune.'/'.$orders->customer->customer_zone.'/'.$orders->customer->customer_colline }} </p>
+            <p>Phone: {{ $orders->customer->customer_phone }}</p>
+            </div>
+            <div class="col-6 text-end no-print">
+            <button onclick="window.print()" class="btn btn-success ">Imprimer</button>
+            </div>
+            </div>
 
-                <br>
+            <br>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table table-bordered">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Description</th>
-                                    <th>Quantite</th>
-                                    <th>Prix</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $total = 0;
-                                    $subTot = 0;
-                                @endphp
-                                @foreach ($ordersDetails as $value)
-                                    @php
-                                        $subTot = $value->sold_price * $value->sold_qty;
-                                        $total += $subTot;
-                                    @endphp
-                                    <tr>
-                                        <td>{{ $value->service_name }}</td>
-                                        <td>{{ $value->sold_qty }}</td>
-                                        <td>{{ $value->sold_price }}</td>
-                                        <td>{{ $subTot }}</td>
-                                    </tr>
-                                    
-                                @endforeach
-                            </tbody>
-                            <tfoot>
-                                {{-- <tr>
-                                    <th colspan="3" class="text-end">Subtotal</th>
-                                    <td>$820.00</td>
-                                </tr>
-                                <tr>
-                                    <th colspan="3" class="text-end">Tax (10%)</th>
-                                    <td>$82.00</td>
-                                </tr> --}}
-                                <tr>
-                                    <th colspan="3" class="text-end">Total</th>
-                                    <td ><strong id="total"> {{ $total }} </strong></td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
+            <div class="row">
+            <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead class="table-light">
+                <tr>
+                <th>Description</th>
+                <th>Quantite</th>
+                <th>Prix</th>
+                <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                @php
+                $total = 0;
+                $subTot = 0;
+                @endphp
+                @foreach ($ordersDetails as $value)
+                @php
+                $subTot = $value->sold_price * $value->sold_qty;
+                $total += $subTot;
+                @endphp
+                <tr>
+                <td>{{ $value->service_name }}</td>
+                <td>{{ $value->sold_qty }}</td>
+                <td>{{ $value->sold_price }}</td>
+                <td>{{ $subTot }}</td>
+                </tr>
+                
+                @endforeach
+                </tbody>
+                <tfoot>
+                <tr>
+                <th colspan="3" class="text-end">Total</th>
+                <td><strong id="total">{{ $total }}</strong></td>
+                </tr>
+                </tfoot>
+            </table>
+            </div>
+            </div>
             </div>
         </div>
     </div>
@@ -95,7 +117,7 @@
                             <select id="mode" name="mode"
                                 class="select2 form-control @error('customer_id') is-invalid @enderror"
                                 >
-                                <option selected disabled>Sélectionnez un client</option>
+                                <option selected disabled>Sélectionnez un mode</option>
                                 @foreach ($mode as $value)
                                     <option value="{{ $value->id }}">
                                         {{ $value->paymode_name }}

@@ -110,7 +110,7 @@
         <!-- ============================================================== -->
         <!-- left sidebar -->
         <!-- ============================================================== -->
-        <div class="nav-left-sidebar sidebar-dark">
+        <div class="nav-left-sidebar sidebar-dark no-print">
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <a class="d-xl-none d-lg-none" href="#">Menu</a>
@@ -159,7 +159,7 @@
         <div class="dashboard-wrapper">
             <div class="container-fluid dashboard-content ">
                 {{-- @yield('content') --}}
-                <div class="row">
+                <div class="row mt-5">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="page-header">
                             @yield("content")
@@ -171,7 +171,7 @@
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <div class="footer">
+            <div class="footer no-print">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="d-flex justify-content-center col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -232,6 +232,8 @@
             //     XLSX.writeFile(wb, name || ('MySheetName.' + (type || 'xlsx')));
 
         }
+
+        $('.select2').select2();
     </script>
 
     @yield('js_content')

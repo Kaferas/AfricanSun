@@ -64,7 +64,7 @@
                                     <select id="province" name="customer_province" onchange="triggerCommune()"
                                         class="select2 form-control @error('customer_province') is-invalid @enderror"
                                         >
-                                        <option>Sélectionnez une province</option>
+                                        <option selected disabled>Sélectionnez une province</option>
                                         @foreach ($provinces as $value)
                                             <option value="{{ $value->region }}"
                                                 {{ old('customer_province', $customer->customer_province ?? '') == $value->region ? 'selected' : '' }}>
@@ -165,6 +165,8 @@
             success: function(data) {
                 $("#commune").find('option').remove().end();
                 $(".externeC").attr("hidden", false);
+                $("#commune").append(
+                            `<option selected disabled>Sélectionnez une commune</option>`)
                 $.each(data, function(key, value) {
                     $("#commune").append(
                         `<option class="" value='${value.district}'>${value.district}</option>`)
@@ -187,6 +189,8 @@
                 $("#zone").find('option').remove().end();
                 if (data.length > 0) {
                     $(".externeZ").attr("hidden", false);
+                    $("#commune").append(
+                            `<option selected disabled>Sélectionnez une zone</option>`)
                     $.each(data, function(key, value) {
                         $("#zone").append(
                             `<option value='${value.city}'>${value.city}</option>`)

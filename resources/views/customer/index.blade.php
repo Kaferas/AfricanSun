@@ -33,16 +33,38 @@
     
                         <form class="col-md-10" action="{{ route('customer.index') }}" method="get">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-3">
                                     <div id="custom-search" class="top-search-bar">
+                                        <label for="province">Recherche</label>
                                         <input class="form-control" type="text" placeholder="Search.." name="search" value="{{ old('search',$search) }}">
                                     </div>
                                 </div>
-                                <div class="col-md-2 mt-2">
+                                <div class="col-md-3 mt-3">
+                                    <div class="form-group">
+                                        <label for="province">Province</label>
+                                        <select id="province" name="province" onchange="triggerCommune()"
+                                            class="select2 form-control">
+                                            <option selected disabled>Sélectionnez une province</option>
+                                            @foreach ($provinces as $value)
+                                                <option value="{{ $value->region }}"
+                                                    {{ old('province', $province ?? '') == $value->region ? 'selected' : '' }}>
+                                                    {{ $value->region }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="form-group externeC" hidden>
+                                        <label for="commune">Commune</label>
+                                        <select id="commune" name="commune"  class="select2 form-control " >
+                                            <option selected disabled>Sélectionnez une commune</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-4">
                                     <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                     <a href="{{ route('customer.index') }}" class="btn btn-light"><i class="fas fa-redo"></i></a>
-                                </div>
-                                <div class="col-md-2 mt-2">
                                     <a href="{{ route('customer.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                                 </div>
                             </div>
@@ -102,6 +124,36 @@
 
 @section('js_content')
     <script>
+        var selectedProvince = "<?= $province ?>";
+        var selectedCommune = "<?= $commune ?>";
+
+        function triggerCommune() {
+            let province = $("#province").val()
+            // $(".externeQ").attr("hidden", true)
+            $.ajax({
+                url: "{{ url('communeOfProvince') }}",
+                type: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    province: province
+                },
+                success: function(data) {
+                    $("#commune").find('option').remove().end();
+                    $(".externeC").attr("hidden", false);
+                    $("#commune").append(
+                            `<option selected disabled>Sélectionnez une commune</option>`)
+                    $.each(data, function(key, value) {
+                        $("#commune").append(
+                            `<option ${selectedCommune == value.district ? 'selected' : ''} value='${value.district}'>${value.district}</option>`)
+                    })
+                },
+
+            });
+        }
+
+        if (selectedProvince != '') {
+            triggerCommune();
+        }
      
         function handleDelete(th) {
             var url = $(th).data('href');

@@ -33,11 +33,13 @@ class CustomerController extends Controller
         }
 
         $customers = $customerQuery->active()->paginate(100);
+        $provinces = DB::select("SELECT distinct region from burundizipcodes");
 
         return view('customer.index',[
             'customers' => $customers,
             'search' => $search,
             'province' => $province,
+            'provinces' => $provinces,
             'commune' => $commune,
         ]);
 

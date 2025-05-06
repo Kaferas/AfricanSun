@@ -6,8 +6,10 @@ use App\Http\Controllers\PayModeController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\AgentController;
+use App\Http\Controllers\KitController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\TokenController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -36,6 +38,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/order/pay', [OrdersController::class, 'validatePayment'])->name('order.pay');
     Route::get('/invoices', [OrdersController::class, 'indexInvoice'])->name('invoices.index');
     Route::get('/invoices/{order}', [OrdersController::class, 'showInvoice'])->name('invoices.show');
+
+    Route::resource('kit',KitController::class);
+    Route::resource('token',TokenController::class);
 
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -139,6 +139,12 @@
                                 <a class="nav-link @if (request()->routeIs('orders.*')) active @endif" href="{{ route('orders.index') }}"><i class="fa fa-fw fas fa-users"></i>Commandes</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link @if (request()->routeIs('kit.*')) active @endif" href="{{ route('kit.index') }}"><i class="fa fa-fw fas fa-users"></i>Kits</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @if (request()->routeIs('token.*')) active @endif" href="{{ route('token.index') }}"><i class="fa fa-fw fas fa-users"></i>Tokens</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link @if (request()->routeIs('invoices.*')) active @endif" href="{{ route('invoices.index') }}"><i class="fa fa-fw fas fa-users"></i>Factures</a>
                             </li>
                             <li class="nav-item">

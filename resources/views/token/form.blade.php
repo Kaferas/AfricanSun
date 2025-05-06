@@ -57,7 +57,7 @@
                                 <label for="end_token_date" class="col-md-4 col-form-label text-md-right">Date Fin</label>
                                 <div class="col-md-6">
                                     <input id="end_token_date" type="date" class="form-control @error('end_token_date') is-invalid @enderror" 
-                                        name="vaend_token_datelue" value="{{ old('end_token_date', isset($token) ? $token->end_token_date : '') }}" >
+                                        name="end_token_date" value="{{ old('end_token_date', isset($token) ? $token->end_token_date : '') }}" >
                                     @error('end_token_date')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -86,7 +86,7 @@
 
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" id="saveBtn" class="btn btn-primary">
                                 Generer
                             </button>
                             <a href="{{ route('token.index') }}" class="btn btn-secondary">Annuler</a>
@@ -125,40 +125,46 @@
 
         function getSerialNumber(id) {
             var kit = kits.filter((row) => row.id == id);
-
+            
             if (kit.length == 1) {
-                return kit[0].kit_serial_number;
+                return [kit[0].kit_serial_number,kit[0].token_count];
             } else {
-                return '';
+                return [];
             }
         }
 
-
-
         $(document).ready(function() {
-            $('#token_form').on('submit', function(e) {
+            $('#saveBtn').on('click', async  function(e) {
                 e.preventDefault(); // Prevent the default form submission
                 $("#saveBtn").attr('disabled',true);
-                var url = "https://api.ampedinnovation.com/v1.0/token";
+                var url = "{{ route('get.token') }}";
+
                 var type =$('#token_type').val();
                 var endDate =$('#end_token_date').val();
                 var command = type == 'credit' ? 1 : (type == 'unlock' ? 3 : 5);
                 var data = command == 1 ? calculateDaysBetween(endDate) : 0;
                 
                 var kitId = $('#kit_id').val();
+                var kitData = getSerialNumber(kitId);
+                var resultcount = kitData[1] == 0 ? 0 : (parseInt(kitData[1]) + 1); 
 
                 var formData = {
                     'command': command,
                     'data': data,
-                    'count': 3,
-                    'key': getSerialNumber(kitId)
+                    'count': (3 + resultcount),
+                    'key': kitData[0]
                 }
+
+                
 
                 $.ajax({
                     url: url, // Replace with your route name
                     type: 'POST',
-                    data: formData,
-                    contentType: 'JSON',
+                    data: {
+                        data: JSON.stringify(formData),
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    dataType: 'json',
                     success: function(data) {
                         console.log(data);
                         

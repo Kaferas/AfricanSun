@@ -95,9 +95,9 @@
                                                 <a href="{{ route('token.show',$value->id) }}" class="btn btn-info btn-sm">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <a href="{{ route('token.edit',["order" => $value]) }}" class="btn btn-warning btn-sm">
+                                                {{-- <a href="{{ route('token.edit',$value->id) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-edit"></i>
-                                                </a>
+                                                </a> --}}
                                                 <a data-href="{{ route('token.destroy',$value->id) }}" onclick="handleDelete(this)" class="btn btn-danger btn-sm">
                                                     <i class="fas fa-trash"></i>
                                                 </a>

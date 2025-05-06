@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Kit extends Model
 {
@@ -20,5 +21,10 @@ class Kit extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class,'customer_id');
+    }
+
+    public function token(): HasMany
+    {
+        return $this->hasMany(Token::class);
     }
 }

@@ -50,7 +50,7 @@ class TokenController extends Controller
      */
     public function create()
     {
-        $kits = Kit::all();
+        $kits = Kit::withCount('token')->get();
 
         return view('token.form',compact('kits'));
     }
@@ -65,7 +65,6 @@ class TokenController extends Controller
             'kit_id.exists' => 'Le Kit sélectionné n\'existe pas.',
             'generated_token.required' => 'Le jeton généré est obligatoire.',
             'generated_token.unique' => 'Ce jeton existe déjà.',
-            'end_token_date.required' => 'La date de fin du jeton est obligatoire.',
             'token_type.required' => 'Le type de jeton est obligatoire.',
             'token_type.in' => 'Le type de jeton doit être crédit, déverrouillage ou réinitialisation.'
         ];
@@ -73,7 +72,6 @@ class TokenController extends Controller
         $validated = $request->validate([
             'kit_id' => 'required|exists:kits,id',
             'generated_token' => 'required|string|unique:tokens,generated_token',
-            'end_token_date' => 'required',
             'token_type' => 'required|in:credit,unlock,reset'
         ],$messages);
 

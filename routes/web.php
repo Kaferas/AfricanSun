@@ -10,6 +10,7 @@ use App\Http\Controllers\KitController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TokenController;
+use App\Http\Controllers\AmpedApiController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -41,6 +42,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('kit',KitController::class);
     Route::resource('token',TokenController::class);
+
+    Route::post('/get-token',[AmpedApiController::class,'fetchTokenFromApi'])->name('get.token');
 
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

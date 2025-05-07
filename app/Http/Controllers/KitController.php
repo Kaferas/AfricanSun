@@ -16,7 +16,7 @@ class KitController extends Controller
     {
         $search = $request->search;
         $customer = $request->customer;
-        
+
         $kitQuery = Kit::query();
         if ($request->has('search') && !empty($search)) {
             $kitQuery->where('kit_serial_number', 'like', '%' . $search . '%');
@@ -29,7 +29,7 @@ class KitController extends Controller
 
         $kits = $kitQuery->paginate(20);
         $customerList = Customer::active()->get();
-            
+
         return view('kits.index', compact('kits','search','customer','customerList'));
     }
 
@@ -74,22 +74,25 @@ class KitController extends Controller
                     "messages" => ['error' => 'Erreur,veillez Réessayer svp!!']
                 ]);
             }
-            
+
         } else {
             echo json_encode([
                 "success" => false,
                 "messages" => $validated->errors()
             ]);
         }
-        
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Kit $kit)
+    public function show(string $kit)
     {
-        //
+        $kit=Kit::where('kit_serial_number',$kit)->first();
+        $kit->load(['customer','user','token']);
+        // dd($kit);
+        return view('kits.show',compact('kit'));
     }
 
     /**
@@ -133,7 +136,7 @@ class KitController extends Controller
                     "messages" => ['error' => 'Erreur, veuillez réessayer svp!']
                 ]);
             }
-            
+
         } else {
             echo json_encode([
                 "success" => false,

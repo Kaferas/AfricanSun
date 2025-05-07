@@ -20,7 +20,7 @@ class AmpedApiController extends Controller
         if ($response->successful()) {
             return $response->json();
         }
-        
+
         return response()->json([
             'error' => 'Failed to fetch token',
             'details' => $response->json()

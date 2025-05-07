@@ -34,7 +34,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            
+
                         </div>
 
                         <div class="row">
@@ -97,7 +97,7 @@
                         <div class="row">
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group externeZ" {{ isset($customer) ? '' : 'hidden' }}>
-                                    <label for="customer_zone">Zone</label>
+                                    <label for="customer_zone">Colline</label>
                                     <select id="zone" name="customer_zone" onchange="triggerColline()"
                                         class="select2 form-control @error('customer_zone') is-invalid @enderror"
                                         >
@@ -112,7 +112,7 @@
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group externeQ" {{ isset($customer) ? '' : 'hidden' }}>
-                                    <label for="customer_colline">Colline</label>
+                                    <label for="customer_colline">Zone</label>
                                     <input type="text" class="form-control @error('customer_colline') is-invalid @enderror" id="customer_colline" name="customer_colline" value="{{ old('customer_colline', $customer->customer_colline ?? '') }}">
                                     @error('customer_colline')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -164,6 +164,8 @@
             },
             success: function(data) {
                 $("#commune").find('option').remove().end();
+                $("#commune").append(
+                    `<option class="" value=''>Selectionner commune</option>`);
                 $(".externeC").attr("hidden", false);
                 $("#commune").append(
                             `<option selected disabled>Sélectionnez une commune</option>`)
@@ -187,6 +189,8 @@
             },
             success: function(data) {
                 $("#zone").find('option').remove().end();
+                $("#zone").append(
+                    `<option class="" value=''>Selectionner Colline</option>`);
                 if (data.length > 0) {
                     $(".externeZ").attr("hidden", false);
                     $("#commune").append(

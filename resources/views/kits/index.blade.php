@@ -8,7 +8,7 @@
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="page-header">
                 <h2 class="pageheader-title">Liste des Kits </h2>
-                
+
                 <div class="page-breadcrumb">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -30,7 +30,7 @@
                         <div class="col-md-2 mt-3">
                             <h4 class="text-center">Liste des Kits</h4>
                         </div>
-                        
+
                         <form class="col-md-10" action="{{ route('kit.index') }}" method="get">
                             <div class="row">
                                 <div class="col-md-8">
@@ -57,8 +57,8 @@
                             <table class="table">
                                 <thead>
                                     <tr>
+                                        <th scope="col">Serial Number Kit</th>
                                         <th scope="col">Customer</th>
-                                        <th scope="col">Numero de Serie du Kit</th>
                                         <th scope="col">Statut</th>
                                         <th scope="col">Créé Par</th>
                                         <th scope="col">Date</th>
@@ -67,9 +67,9 @@
                                 </thead>
                                 <tbody>
                                     @foreach($kits as $value)
-                                        <tr>
+                                        <tr class="h6">
+                                            <td ><a href="{{ route("kit.show", $value->kit_serial_number) }}" class="text text-primary">{{ $value->kit_serial_number }}</a></td>
                                             <td>{{ $value->customer->customer_firstname .' '.$value->customer->customer_lastname }}</td>
-                                            <td>{{ $value->kit_serial_number }}</td>
                                             <td>
                                                 @if ($value->kit_status == 0)
                                                     <span class="badge badge-primary">Locked</span>
@@ -80,7 +80,7 @@
                                             <td>{{ $value->user->name }}</td>
                                             <td>{{ $value->created_at->format('d/m/Y') }}</td>
                                             <td>
-                                                
+
                                                 <a data-href="{{ route('kit.update',$value->id) }}" onclick="handleOpenModal(this)" data-value="{{ json_encode($value) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-edit"></i>
                                                 </a>

@@ -29,7 +29,7 @@
                     </div>
                     <hr class="text text-default"/>
                     <div class="d-flex justify-content-between mt-3">
-                        <select name="province" id="province" class="form-control" onchange="triggerCommune()"
+                        <select name="province" id="province" class="form-control" onchange="triggerCommune()">
                             <option  selected>Selectionner province</option>
                             @foreach ($provinces as $province)
                                 <option value="{{ $province->region }}">{{ $province->region }}</option>
@@ -84,6 +84,8 @@
             },
             success: function(data) {
                 $("#commune").find('option').remove().end();
+                $("#commune").append(
+                    `<option class="" value=''>Selectionner commune</option>`);
                 $.each(data, function(key, value) {
                     $("#commune").append(
                         `<option class="" value='${value.district}'>${value.district}</option>`)
@@ -106,6 +108,8 @@
                 $("#colline").find('option').remove().end();
                 if (data.length > 0) {
                     $(".externeQ").attr("hidden", false)
+                    $("#colline").append(
+                        `<option class="" value=''>Selectionner colline</option>`);
                     $.each(data, function(key, value) {
                         $("#colline").append(
                             `<option value='${value.city}'>${value.city}</option>`)

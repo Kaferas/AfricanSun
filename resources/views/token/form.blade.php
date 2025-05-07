@@ -44,7 +44,7 @@
                                     <option value='credit' {{ old('token_type', $token->token_type ?? '') == 'credit' ? 'selected' : '' }}>Crédit</option>
                                     <option value='unlock' {{ old('token_type', $token->token_type ?? '') == 'unlock' ? 'selected' : '' }}>Déverrouillage</option>
                                     <option value='reset' {{ old('token_type', $token->token_type ?? '') == 'reset' ? 'selected' : '' }}>Réinitialisation</option>
-                                    
+
                                 </select>
                                 @error('token_type')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -56,16 +56,15 @@
                             <div class="form-group mb-3" id="dateField" hidden>
                                 <label for="end_token_date" class="col-md-4 col-form-label text-md-right">Date Fin</label>
                                 <div class="col-md-6">
-                                    <input id="end_token_date" type="date" class="form-control @error('end_token_date') is-invalid @enderror" 
+                                    <input id="end_token_date" type="date" class="form-control @error('end_token_date') is-invalid @enderror"
                                         name="end_token_date" value="{{ old('end_token_date', isset($token) ? $token->end_token_date : '') }}" >
                                     @error('end_token_date')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
-                            
-                        </div>
 
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group mb-3" id="tokenField" hidden>
                                 <label for="generated_token" class="col-md-4 col-form-label text-md-right">Generated Token</label>
@@ -78,12 +77,9 @@
                                     @enderror
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
-
-
-
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
                             <button type="submit" id="saveBtn" class="btn btn-primary">
@@ -104,7 +100,7 @@
     <script>
 
         var kits = <?=json_encode($kits) ?>;
-        
+
         function displayDateField(th) {
             var type = $(th).val();
 
@@ -125,7 +121,7 @@
 
         function getSerialNumber(id) {
             var kit = kits.filter((row) => row.id == id);
-            
+
             if (kit.length == 1) {
                 return [kit[0].kit_serial_number,kit[0].token_count];
             } else {
@@ -139,14 +135,33 @@
                 $("#saveBtn").attr('disabled',true);
                 var url = "{{ route('get.token') }}";
 
-                var type =$('#token_type').val();
-                var endDate =$('#end_token_date').val();
+                var type = $('#token_type').val();
+                var endDate = $('#end_token_date').val();
+                var kitId = $('#kit_id').val();
+
+                // Validation checks
+                if (!kitId) {
+                    loadValidation('Veuillez sélectionner un kit,pour continuer');
+                    $("#saveBtn").attr('disabled', false);
+                    return;
+                }
+                
+                if (!type) {
+                    loadValidation('Veuillez sélectionner un type de token');
+                    $("#saveBtn").attr('disabled', false);
+                    return;
+                }
+
+                if (type === 'credit' && !endDate) {
+                    loadValidation('Veuillez sélectionner une date de fin pour le token de crédit');
+                    $("#saveBtn").attr('disabled', false);
+                    return;
+                }
                 var command = type == 'credit' ? 1 : (type == 'unlock' ? 3 : 5);
                 var data = command == 1 ? calculateDaysBetween(endDate) : 0;
-                
-                var kitId = $('#kit_id').val();
+
                 var kitData = getSerialNumber(kitId);
-                var resultcount = kitData[1] == 0 ? 0 : (parseInt(kitData[1]) + 1); 
+                var resultcount = kitData[1] == 0 ? 0 : (parseInt(kitData[1]) + 1);
 
                 var formData = {
                     'command': command,
@@ -155,7 +170,7 @@
                     'key': kitData[0]
                 }
 
-                
+
 
                 $.ajax({
                     url: url, // Replace with your route name
@@ -167,9 +182,9 @@
                     dataType: 'json',
                     success: function(data) {
                         console.log(data);
-                        
+
                         data = typeof data == 'string' ? JSON.parse(data) : data;
-                        
+
                         if(data.token) {
                             $('#generated_token').val(data.token);
                             $('#tokenField').attr('hidden',false);
@@ -186,6 +201,12 @@
                 });
             });
         });
+
+        function loadValidation(msg) {
+            var html = "<ul class='list-group'>";
+            html += `<li class="list-group-item text-danger">${msg}</li>`;
+            html += "</ul>";
+        }
 
     </script>
 @endsection

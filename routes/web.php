@@ -22,9 +22,9 @@ Route::get('/', function () {
 // })->name('template');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->middleware(['auth', 'verified'])->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return view('dashboard');
+    // })->middleware(['auth', 'verified'])->name('dashboard');
     Route::resource('customer',CustomerController::class);
     Route::resource('orders',OrdersController::class);
     Route::resource('service',ServiceController::class)->except(['show','create','edit']);
@@ -39,7 +39,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/order/pay', [OrdersController::class, 'validatePayment'])->name('order.pay');
     Route::get('/invoices', [OrdersController::class, 'indexInvoice'])->name('invoices.index');
     Route::get('/invoices/{order}', [OrdersController::class, 'showInvoice'])->name('invoices.show');
-
     Route::resource('kit',KitController::class);
     Route::resource('token',TokenController::class);
 

@@ -30,7 +30,7 @@
                         <div class="col-md-2 mt-3">
                             <h4 class="text-center">Liste des Clients</h4>
                         </div>
-    
+
                         <form class="col-md-10" action="{{ route('customer.index') }}" method="get">
                             <div class="row">
                                 <div class="col-md-3">
@@ -154,7 +154,7 @@
         if (selectedProvince != '') {
             triggerCommune();
         }
-     
+
         function handleDelete(th) {
             var url = $(th).data('href');
 

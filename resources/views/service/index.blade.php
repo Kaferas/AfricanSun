@@ -8,7 +8,7 @@
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="page-header">
                 <h2 class="pageheader-title">Liste des Services </h2>
-                
+
                 <div class="page-breadcrumb">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -30,7 +30,7 @@
                         <div class="col-md-2 mt-3">
                             <h4 class="text-center">Liste des Services</h4>
                         </div>
-                        
+
                         <form class="col-md-10" action="{{ route('service.index') }}" method="get">
                             <div class="row">
                                 <div class="col-md-8">
@@ -76,7 +76,7 @@
                                             <td>{{ $value->user->name }}</td>
                                             <td>{{ $value->created_at->format('d/m/Y') }}</td>
                                             <td>
-                                                
+
                                                 <a data-href="{{ route('service.update',$value->id) }}" onclick="handleOpenModal(this)" data-value="{{ json_encode($value) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-edit"></i>
                                                 </a>

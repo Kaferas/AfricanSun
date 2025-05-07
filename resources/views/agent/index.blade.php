@@ -3,8 +3,6 @@
 
 @section("content")
     <div class="row mt-3">
-        <div class="container position-fixed top-0 start-0">
-        </div>
         <div class="col-xl-12 col-lg-12 col-md-1 col-sm-12 col-12">
             <div class="card">
                 <div class="card-header">

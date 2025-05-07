@@ -98,9 +98,9 @@
                                                 {{-- <a href="{{ route('token.edit',$value->id) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-edit"></i>
                                                 </a> --}}
-                                                <a data-href="{{ route('token.destroy',$value->id) }}" onclick="handleDelete(this)" class="btn btn-danger btn-sm">
+                                                {{-- <a data-href="{{ route('token.destroy',$value->id) }}" onclick="handleDelete(this)" class="btn btn-danger btn-sm">
                                                     <i class="fas fa-trash"></i>
-                                                </a>
+                                                </a> --}}
                                             </td>
                                         </tr>
                                     @endforeach
